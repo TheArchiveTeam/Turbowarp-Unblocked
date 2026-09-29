@@ -40,9 +40,13 @@ const translateGalleryItem = (extension, locale) => ({
 });
 
 let cachedGallery = null;
+const localExtensionsBaseURL = new URL(
+    `${process.env.ROOT}static/extensions/`,
+    window.location.origin
+).href;
 
 const fetchLibrary = async () => {
-    const res = await fetch('https://extensions.turbowarp.org/generated-metadata/extensions-v0.json');
+    const res = await fetch(`${localExtensionsBaseURL}generated-metadata/extensions-v0.json`);
     if (!res.ok) {
         throw new Error(`HTTP status ${res.status}`);
     }
@@ -53,8 +57,8 @@ const fetchLibrary = async () => {
         description: extension.description,
         descriptionTranslations: extension.descriptionTranslations || {},
         extensionId: extension.id,
-        extensionURL: `https://extensions.turbowarp.org/${extension.slug}.js`,
-        iconURL: `https://extensions.turbowarp.org/${extension.image || 'images/unknown.svg'}`,
+        extensionURL: `${localExtensionsBaseURL}${extension.slug}.js`,
+        ...(extension.image ? {iconURL: `${localExtensionsBaseURL}${extension.image}`} : {}),
         tags: ['tw'],
         credits: [
             ...(extension.original || []),
@@ -74,9 +78,11 @@ const fetchLibrary = async () => {
             }
             return credit.name;
         }),
-        docsURI: extension.docs ? `https://extensions.turbowarp.org/${extension.slug}` : null,
+        docsURI: extension.docs ? `${localExtensionsBaseURL}${extension.slug}` : null,
         samples: extension.samples ? extension.samples.map(sample => ({
-            href: `${process.env.ROOT}editor?project_url=https://extensions.turbowarp.org/samples/${encodeURIComponent(sample)}.sb3`,
+            href: `${process.env.ROOT}editor?project_url=${localExtensionsBaseURL}samples/${encodeURIComponent(
+                sample
+            )}.sb3`,
             text: sample
         })) : null,
         incompatibleWithScratch: !extension.scratchCompatible,

@@ -55,6 +55,11 @@ import returnIcon from './custom/return.svg';
 import galleryIcon from './gallery/gallery.svg';
 import {APP_NAME} from '../../brand';
 
+const localExtensionsBaseURL = new URL(
+    `${process.env.ROOT}static/extensions/`,
+    window.location.origin
+).href;
+
 export default [
     {
         name: (
@@ -128,7 +133,7 @@ export default [
             />
         ),
         extensionId: 'faceSensing',
-        extensionURL: 'https://extensions.turbowarp.org/lab/face-sensing.js',
+        extensionURL: `${localExtensionsBaseURL}lab/face-sensing.js`,
         iconURL: faceSensingIconURL,
         insetIconURL: faceSensingInsetIconURL,
         description: (
@@ -433,14 +438,14 @@ export const galleryLoading = {
     name: (
         <FormattedMessage
             defaultMessage="{APP_NAME} Extension Gallery"
-            description="Name of extensions.turbowarp.org in extension library"
+            description="Name of the bundled extension gallery in extension library"
             id="tw.extensionGallery.name"
             values={{
                 APP_NAME
             }}
         />
     ),
-    href: 'https://extensions.turbowarp.org/',
+    href: `${process.env.ROOT}static/extensions/generated-metadata/extensions-v0.json`,
     extensionId: 'gallery',
     iconURL: galleryIcon,
     description: (
@@ -459,20 +464,20 @@ export const galleryMore = {
     name: (
         <FormattedMessage
             defaultMessage="{APP_NAME} Extension Gallery"
-            description="Name of extensions.turbowarp.org in extension library"
+            description="Name of the bundled extension gallery in extension library"
             id="tw.extensionGallery.name"
             values={{
                 APP_NAME
             }}
         />
     ),
-    href: 'https://extensions.turbowarp.org/',
+    href: `${process.env.ROOT}static/extensions/generated-metadata/extensions-v0.json`,
     extensionId: 'gallery',
     iconURL: galleryIcon,
     description: (
         <FormattedMessage
             // eslint-disable-next-line max-len
-            defaultMessage="Learn more about extensions at extensions.turbowarp.org."
+            defaultMessage="View the extensions bundled with this build."
             description="Appears after the extension list from the gallery was loaded successfully"
             id="tw.extensionGallery.more"
         />
@@ -485,20 +490,20 @@ export const galleryError = {
     name: (
         <FormattedMessage
             defaultMessage="{APP_NAME} Extension Gallery"
-            description="Name of extensions.turbowarp.org in extension library"
+            description="Name of the bundled extension gallery in extension library"
             id="tw.extensionGallery.name"
             values={{
                 APP_NAME
             }}
         />
     ),
-    href: 'https://extensions.turbowarp.org/',
+    href: `${process.env.ROOT}static/extensions/generated-metadata/extensions-v0.json`,
     extensionId: 'gallery',
     iconURL: galleryIcon,
     description: (
         <FormattedMessage
             // eslint-disable-next-line max-len
-            defaultMessage="Error loading extension gallery. Visit extensions.turbowarp.org to find more extensions."
+            defaultMessage="Error loading the bundled extension gallery."
             description="Appears when an error occurred loading extension list from the custom extension gallery"
             id="tw.extensionGallery.error"
         />

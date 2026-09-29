@@ -13,6 +13,10 @@ import {getPersistedUnsandboxed, setPersistedUnsandboxed} from '../lib/tw-persis
  * Set of extension URLs that the user has manually trusted to load unsandboxed.
  */
 const extensionsTrustedByUser = new Set();
+const bundledExtensionsBaseURL = new URL(
+    `${process.env.ROOT}static/extensions/`,
+    window.location.origin
+).href;
 
 const manuallyTrustExtension = url => {
     extensionsTrustedByUser.add(url);
@@ -24,8 +28,8 @@ const manuallyTrustExtension = url => {
  * @returns {boolean} True if the extension can is trusted
  */
 const isTrustedExtension = url => (
-    // Always trust our official extension repostiory.
-    url.startsWith('https://extensions.turbowarp.org/') ||
+    // Always trust extensions bundled with this build.
+    url.startsWith(bundledExtensionsBaseURL) ||
 
     // For development.
     url.startsWith('http://localhost:8000/') ||

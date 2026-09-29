@@ -239,6 +239,11 @@ module.exports = [
                         from: 'extensions/**',
                         to: 'static',
                         context: 'src/examples'
+                    },
+                    {
+                        from: '**/*',
+                        to: 'static/extensions',
+                        context: 'extensions'
                     }
                 ]
             })
